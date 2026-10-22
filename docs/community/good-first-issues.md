@@ -1,4 +1,6 @@
 # Recommended entry issues
 
-This generated page is refreshed from open `drips-wave` issues and sorts them by unresolved
-dependency count. It does not change their official High/200-point complexity.
+Generated from open `drips-wave` issues. Official complexity remains unchanged; ordering uses unresolved dependency count only.
+
+| Issue | Dependencies |
+|---|---:|
