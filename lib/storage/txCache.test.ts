@@ -1,6 +1,20 @@
 import { describe, it, expect, beforeEach, afterEach, vi } from "vitest";
-import { DEFAULT_RETENTION_CAP, normalizeTx, TxCache } from "./txCache";
+import { DEFAULT_RETENTION_CAP, normalizeTx, TxCache, txCache } from "./txCache";
 import { buildMockTx } from "../soroban/test-utils";
+import type { Transaction } from "@/lib/types";
+
+function makeTx(id: string, timestamp: number, extra: Record<string, unknown> = {}): Transaction {
+  return {
+    id,
+    asset: "USDC",
+    amount: "10",
+    status: "completed",
+    timestamp,
+    from: "GFROM",
+    to: "GTO",
+    ...extra,
+  } as unknown as Transaction;
+}
 
 // Force the in-memory fallback so tests never touch a real IndexedDB.
 beforeEach(() => {
@@ -56,11 +70,50 @@ describe("normalizeTx", () => {
 });
 
 describe("TxCache (in-memory fallback)", () => {
+  it("exports a shared default instance", () => {
+    expect(txCache).toBeInstanceOf(TxCache);
+  });
+
   it("reports non-persistent without IndexedDB", () => {
     expect(new TxCache().isPersistent).toBe(false);
   });
 
   it("ignores empty batches", async () => {
+    const cache = new TxCache();
+    await cache.putMany([]);
+    expect(await cache.getAll()).toEqual([]);
+  });
+
+  it("stores and returns transactions newest first", async () => {
+    const cache = new TxCache();
+    await cache.putMany([makeTx("a", 1), makeTx("b", 3), makeTx("c", 2)]);
+    const all = await cache.getAll();
+    expect(all.map((t) => t.id)).toEqual(["b", "c", "a"]);
+  });
+
+  it("dedupes by id", async () => {
+    const cache = new TxCache();
+    await cache.putMany([makeTx("a", 1, { status: "pending" })]);
+    await cache.putMany([makeTx("a", 1, { status: "completed" })]);
+    const all = await cache.getAll();
+    expect(all).toHaveLength(1);
+    expect(all[0].status).toBe("completed");
+  });
+
+  it("evicts oldest records beyond the retention cap", async () => {
+    const cache = new TxCache({ retentionCap: 2 });
+    await cache.putMany([makeTx("a", 1), makeTx("b", 2), makeTx("c", 3)]);
+    const all = await cache.getAll();
+    expect(all.map((t) => t.id)).toEqual(["c", "b"]);
+  });
+
+  it("clear removes all records", async () => {
+    const cache = new TxCache();
+    await cache.putMany([makeTx("a", 1)]);
+    await cache.clear();
+    expect(await cache.getAll()).toEqual([]);
+  });
+});
     const cache = new TxCache();
     await cache.putMany([]);
     expect(await cache.getAll()).toEqual([]);
