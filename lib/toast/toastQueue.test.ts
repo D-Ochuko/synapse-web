@@ -84,3 +84,49 @@ describe("DEFAULT_PRIORITIES", () => {
     expect(queue.getVisible()[0].priority).toBe(9);
   });
 });
+
+describe("DEDUPE_WINDOW_MS", () => {
+  beforeEach(() => {
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date("2026-01-01T00:00:00Z"));
+  });
+  afterEach(() => vi.useRealTimers());
+
+  it("is a positive number of milliseconds", () => {
+    expect(DEDUPE_WINDOW_MS).toBe(1500);
+  });
+
+  it("collapses identical toasts fired inside the window", () => {
+    const queue = new ToastQueue();
+    const a = queue.info("same");
+    vi.advanceTimersByTime(DEDUPE_WINDOW_MS - 1);
+    const b = queue.info("same");
+    expect(b).toBe(a);
+    expect(queue.getVisible()).toHaveLength(1);
+  });
+
+  it("stacks identical toasts fired at or after the window elapses", () => {
+    const queue = new ToastQueue();
+    const a = queue.info("same", { duration: 0 });
+    vi.advanceTimersByTime(DEDUPE_WINDOW_MS);
+    const b = queue.info("same", { duration: 0 });
+    expect(b).not.toBe(a);
+    expect(queue.getVisible()).toHaveLength(2);
+  });
+
+  it("does not dedupe different messages or types", () => {
+    const queue = new ToastQueue();
+    queue.info("a");
+    queue.info("b");
+    queue.error("a");
+    expect(queue.getVisible()).toHaveLength(3);
+  });
+
+  it("is overridden by the dedupeWindow option", () => {
+    const queue = new ToastQueue();
+    const a = queue.info("same", { dedupeWindow: 10, duration: 0 });
+    vi.advanceTimersByTime(10);
+    const b = queue.info("same", { dedupeWindow: 10, duration: 0 });
+    expect(b).not.toBe(a);
+  });
+});
