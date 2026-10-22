@@ -1,7 +1,7 @@
 "use client";
 import { Panel } from "@/components/ui/Panel";
 import { SorobanTip } from "@/components/ui/SorobanTip";
-import { BORDER, DIM, MONO, ON_ACCENT, STATUS_META } from "@/lib/constants";
+import { BORDER, DIM, MONO, ON_ACCENT, ON_STATUS, STATUS_META } from "@/lib/constants";
 import type { Transaction, TxStatus } from "@/lib/types";
 
 interface PipelineProps {

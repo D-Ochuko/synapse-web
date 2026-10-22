@@ -36,12 +36,15 @@ export const STATUS_META: Record<TxStatus, StatusMeta> = {
 // follows the selected theme automatically.
 export const AMBER = "var(--amber)";
 export const NEUTRAL = "var(--fg)";
+/** Secondary body text, e.g. table values. */
 export const FG_MUTED = "var(--fg-muted)";
+/** Text drawn on top of a STATUS_META[*].color fill. */
+export const ON_STATUS = "var(--on-status)";
 export const ON_ACCENT = "var(--on-accent)";
-export const BG0 = "var(--bg0)";
-export const BG1 = "var(--bg1)";
-export const BG2 = "var(--bg2)";
-export const BG3 = "var(--bg3)";
+export const BG0 = "var(--bg-0)";
+export const BG1 = "var(--bg-1)";
+export const BG2 = "var(--bg-2)";
+export const BG3 = "var(--bg-3)";
 export const BORDER = "var(--border)";
 export const DIM = "var(--dim)";
 export const DANGER = "var(--danger)";

@@ -13,6 +13,7 @@
   --border: rgba(245, 166, 35, 0.15);
   --dim: rgba(255, 255, 255, 0.35);
   --fg: #ffffff;
+  --fg-muted: rgba(255, 255, 255, 0.8);
   --pending: #f5a623;
   --processing: #4fc3f7;
   --completed: #66bb6a;
@@ -45,6 +46,7 @@
   --status-processing-glow: rgba(86, 180, 233, 0.4);
   --status-completed-glow: rgba(240, 228, 66, 0.4);
   --status-failed-glow: rgba(204, 121, 167, 0.4);
+  --on-status: #0a0b0d;
 }
 
 :root[data-theme="light"] {
@@ -60,6 +62,7 @@
   --status-processing-glow: rgba(0, 90, 131, 0.25);
   --status-completed-glow: rgba(112, 102, 0, 0.25);
   --status-failed-glow: rgba(139, 49, 94, 0.25);
+  --on-status: #ffffff;
 }
 
 [data-theme="light"] {
@@ -72,6 +75,7 @@
   --border: rgba(0, 0, 0, 0.14);
   --dim: rgba(0, 0, 0, 0.55);
   --fg: #14171d;
+  --fg-muted: rgba(0, 0, 0, 0.72);
   --pending: #b26a00;
   --processing: #0277bd;
   --completed: #2e7d32;
@@ -92,6 +96,21 @@
   --access-relay: #0277bd;
   --access-admin: #c62828;
   --access-public: #2e7d32;
+}
+
+/*
+ * Semantic aliases used by lib/constants.ts (AMBER, BG0–BG3). They were
+ * referenced but never declared, so those constants resolved to nothing.
+ * Each points at the active palette above, so it follows the theme toggle.
+ */
+:root,
+[data-theme] {
+  --accent: var(--amber);
+  --accent-dim: var(--amber-dim);
+  --bg-0: var(--bg0);
+  --bg-1: var(--bg1);
+  --bg-2: var(--bg2);
+  --bg-3: var(--bg3);
 }
 
 * {

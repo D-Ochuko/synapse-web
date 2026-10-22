@@ -8,6 +8,7 @@ import { TxDetailModal } from "@/components/transactions/TxDetailModal";
 import { useLiveTransactions } from "@/lib/soroban/useLiveTransactions";
 import { useLiveContractInfo } from "@/lib/soroban/useLiveContractInfo";
 import type { Transaction } from "@/lib/types";
+import { AMBER } from "@/lib/constants";
 import {
   DASHBOARD_WIDGET_LABELS,
   loadDashboardLayout,
