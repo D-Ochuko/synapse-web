@@ -103,7 +103,7 @@ export function TxCompareView({
             style={{
               background: "transparent",
               border: `1px solid ${BORDER}`,
-              color: "#eee",
+              color: "var(--fg)",
               fontFamily: MONO,
               fontSize: 11,
               padding: "6px 14px",
@@ -141,7 +141,7 @@ export function TxCompareView({
                     style={{
                       ...cellStyle(false),
                       background: isDiff ? "rgba(245,166,35,0.12)" : BG3,
-                      color: isDiff ? AMBER : "#ddd",
+                      color: isDiff ? AMBER : "var(--fg)",
                     }}
                   >
                     {fieldValue(tx, key)}
@@ -174,7 +174,7 @@ export function TxCompareView({
 function cellStyle(header: boolean): React.CSSProperties {
   return {
     background: header ? "rgba(245,166,35,0.08)" : BG3,
-    color: header ? AMBER : "#ddd",
+    color: header ? AMBER : "var(--fg)",
     fontFamily: MONO,
     fontSize: 11,
     padding: "8px 10px",

@@ -70,7 +70,7 @@ export function NotificationCenter() {
         }}
         onMouseEnter={(e) => {
           if (!open) {
-            e.currentTarget.style.color = "#fff";
+            e.currentTarget.style.color = "var(--fg)";
             e.currentTarget.style.borderColor = AMBER;
           }
         }}
@@ -91,7 +91,7 @@ export function NotificationCenter() {
               top: -5,
               right: -5,
               background: AMBER,
-              color: "#000",
+              color: BG2,
               borderRadius: "50%",
               width: 16,
               height: 16,
@@ -156,7 +156,7 @@ export function NotificationCenter() {
                   padding: 0,
                   transition: "color 0.15s",
                 }}
-                onMouseEnter={(e) => (e.currentTarget.style.color = "#fff")}
+                onMouseEnter={(e) => (e.currentTarget.style.color = "var(--fg)")}
                 onMouseLeave={(e) => (e.currentTarget.style.color = DIM)}
               >
                 CLEAR ALL
