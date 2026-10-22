@@ -1,8 +1,7 @@
 "use client";
 import { useState } from "react";
 import { ABI_ENDPOINTS, AMBER, BORDER, DIM, MONO } from "@/lib/constants";
-import { encodeArg } from "@/lib/soroban/args";
-import { simulateCall, submitCall } from "@/lib/soroban/contract";
+import { EndpointPlayground } from "@/components/docs/EndpointPlayground";
 
 interface DocsTabProps {
   loading?: boolean;
@@ -365,7 +364,7 @@ export function DocsTab({ loading = false, error }: DocsTabProps = {}) {
             >
               {open === ep.name ? "CLOSE PLAYGROUND" : "TRY IT"}
             </button>
-            {open === ep.name && <PlaygroundForm ep={ep} />}
+            {open === ep.name && <EndpointPlayground endpoint={ep} />}
           </div>
           <span
             style={{

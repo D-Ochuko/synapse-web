@@ -3,7 +3,8 @@ import { useState, useRef, useEffect } from "react";
 import { useContractSelection } from "@/lib/soroban/SorobanProvider";
 import { useToast } from "@/components/ui/Toast";
 import { shortId } from "@/lib/utils";
-import { AMBER, BG1, BG2, BG3, BORDER, DIM, MONO, STATUS_META } from "@/lib/constants";
+import { AMBER, BG1, BG2, BORDER, DIM, MONO, STATUS_META } from "@/lib/constants";
+import { ContractOption } from "@/components/ui/ContractOption";
 
 export function ContractSwitcher() {
   const { contractId, setContractId, availableContracts, addContract, removeContract } =
